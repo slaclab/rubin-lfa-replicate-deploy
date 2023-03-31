@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lfa-replicate
+  labels:
+    app: lfa-replicate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lfa-replicate
+  template:
+    metadata:
+      labels:
+        app: lfa-replicate
+    spec:
+      containers:
+      - name: coact
+        image: slaclab/rubin-lfa-replicate:latest
+        command:
+        - "/bin/sh"
+        - "-ec"
+        - "while :; do echo '.'; sleep 6 ; done"
+        env:
+        - name: MINIO_SOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: summit-s3
+              key: endpoint-url
+        - name: MINIO_SOURCE_BUCKET
+          valueFrom:
+            secretKeyRef:
+              name: summit-s3
+              key: bucket
+        - name: MINIO_SOURCE_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: summit-s3
+              key: client-id
+        - name: MINIO_SOURCE_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: summit-s3
+              key: secret-key
+        - name: MINIO_TARGET_URL
+          valueFrom:
+            secretKeyRef:
+              name: usdf-s3
+              key: endpoint-url
+        - name: MINIO_TARGET_BUCKET
+          valueFrom:
+            secretKeyRef:
+              name: usdf-s3
+              key: bucket
+        - name: MINIO_TARGET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: usdf-s3
+              key: client-id
+        - name: MINIO_TARGET_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: usdf-s3
+              key: secret-key
