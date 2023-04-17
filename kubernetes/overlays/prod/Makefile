@@ -1,4 +1,4 @@
-KUBECTL_DEPLOY_CONTEXT ?= 'k8s-sandbox'
+KUBECTL_DEPLOY_CONTEXT ?= 'usdf-lfa'
 
 SECRET_PATH ?= secret/rubin/usdf-lfa/
 
@@ -24,3 +24,9 @@ run-dump:
 apply: ensure-context secrets run-apply clear-secrets
 
 dump: ensure-context secrets run-dump clear-secrets
+
+get-bucket-policy:
+	apptainer exec /sdf/sw/s3/aws-cli_latest.sif aws --endpoint-url https://s3dfrgw.slac.stanford.edu s3api --profile=rubin-lfa-usdf get-bucket-policy --bucket rubinobs-lfa-cp 
+
+set-bucket-policy:
+	apptainer exec /sdf/sw/s3/aws-cli_latest.sif aws --endpoint-url https://s3dfrgw.slac.stanford.edu s3api --profile=rubin-lfa-usdf put-bucket-policy --bucket rubinobs-lfa-cp --policy file://bucket.policy
