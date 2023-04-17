@@ -9,8 +9,8 @@ ensure-context:
 
 secrets:
 	mkdir -p etc/.secrets/
-	for i in url client-id secret-key; do vault kv get -format=table  --field=$$i $(SECRET_PATH)/summit-s3 > etc/.secrets/summit-$$i; done
-	for i in url client-id secret-key; do vault kv get -format=table  --field=$$i $(SECRET_PATH)/usdf-s3 > etc/.secrets/usdf-$$i; done
+	for i in url client-id secret-key bucket; do vault kv get -format=table  --field=$$i $(SECRET_PATH)/summit-s3 > etc/.secrets/summit-$$i; done
+	for i in url client-id secret-key bucket; do vault kv get -format=table  --field=$$i $(SECRET_PATH)/usdf-s3 > etc/.secrets/usdf-$$i; done
 
 clear-secrets:
 	rm -rf etc/.secrets/

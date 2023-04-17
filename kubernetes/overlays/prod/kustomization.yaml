@@ -5,11 +5,13 @@ secretGenerator:
 - name: summit-s3
   files:
   - endpoint-url=etc/.secrets/summit-url
+  - bucket=etc/.secrets/summit-bucket
   - client-id=etc/.secrets/summit-client-id
   - secret-key=etc/.secrets/summit-secret-key
 - name: usdf-s3
   files:
   - endpoint-url=etc/.secrets/usdf-url
+  - bucket=etc/.secrets/usdf-bucket
   - client-id=etc/.secrets/usdf-client-id
   - secret-key=etc/.secrets/usdf-secret-key
   
