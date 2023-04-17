@@ -1,4 +1,7 @@
+namespace: prod
+
 bases:
+- ns.yaml
 - deployment.yaml
 
 secretGenerator:
