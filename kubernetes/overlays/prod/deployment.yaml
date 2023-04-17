@@ -15,7 +15,7 @@ spec:
         app: lfa-replicate
     spec:
       containers:
-      - name: coact
+      - name: mirror
         image: slaclab/rubin-lfa-replicate:latest
         command:
         - "/bin/sh"
@@ -62,3 +62,11 @@ spec:
             secretKeyRef:
               name: usdf-s3
               key: secret-key
+        volumeMounts:
+        - mountPath: /root/.mc
+          name: config
+      volumes:
+      - name: config
+        emptyDir:
+          sizeLimit: 10Mi
+
