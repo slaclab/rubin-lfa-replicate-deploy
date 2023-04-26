@@ -8,4 +8,12 @@ for site in $(env | grep "^MINIO_" | grep URL | awk '{split($0,a,"_"); print a[2
   mc alias set $site "${!this_url_var}" "${!this_access_id_var}" "${!this_secret_id_var}"
 done
 
-mc mirror --no-color --json --watch --monitoring-address ${MINIO_PROMETHEUS_LISTENER:-localhost:8081} ${MINIO_OPTIONS} SOURCE/${MINIO_SOURCE_BUCKET} TARGET/${MINIO_TARGET_BUCKET} 
+if [[ ! -z "${MINIO_LOOP_TIME}" ]]; then
+  while [ 1 ]; do
+    mc mirror --no-color --json --monitoring-address ${MINIO_PROMETHEUS_LISTENER:-localhost:8081} ${MINIO_OPTIONS} SOURCE/${MINIO_SOURCE_BUCKET} TARGET/${MINIO_TARGET_BUCKET} 
+    sleep ${MINIO_LOOP_TIME}
+  done
+else
+  mc mirror --no-color --json --watch --monitoring-address ${MINIO_PROMETHEUS_LISTENER:-localhost:8081} ${MINIO_OPTIONS} SOURCE/${MINIO_SOURCE_BUCKET} TARGET/${MINIO_TARGET_BUCKET} 
+fi
+

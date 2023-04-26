@@ -13,15 +13,16 @@ spec:
     metadata:
       labels:
         app: lfa-replicate
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8081'
     spec:
       containers:
       - name: mirror
         image: slaclab/rubin-lfa-replicate:latest
-        command:
-        - "/bin/sh"
-        - "-ec"
-        - "while :; do echo '.'; sleep 6 ; done"
         env:
+        - name: MINIO_LOOP_TIME
+          value: "600"
         - name: MINIO_SOURCE_URL
           valueFrom:
             secretKeyRef:
