@@ -23,6 +23,8 @@ spec:
         env:
         - name: MINIO_LOOP_TIME
           value: "600"
+        - name: MINIO_OPTIONS
+          value: "--overwrite"
         - name: MINIO_SOURCE_URL
           valueFrom:
             secretKeyRef:
